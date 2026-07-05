@@ -131,7 +131,7 @@ h1 em{font-style:italic;font-weight:380;color:var(--gold-soft)}
 .t-route{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:24px}
 .t-city{font-family:'Fraunces',serif;font-size:30px;font-weight:460}
 .t-code{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--slate-dim);letter-spacing:.14em;margin-top:2px}
-.t-line{flex:1;position:relative;height:1px;border-top:1px dashed rgba(217,179,106,.5);margin:0 6px}
+.t-line{flex:1;min-width:56px;position:relative;height:1px;border-top:1px dashed rgba(217,179,106,.55);margin:0 6px}
 .t-line::after{
   content:"";position:absolute;top:-4.5px;left:0;width:9px;height:9px;border-radius:50%;
   background:var(--gold);box-shadow:0 0 12px rgba(217,179,106,.8);
@@ -292,8 +292,9 @@ footer{border-top:1px solid var(--line);padding:44px 0;background:var(--night-2)
 @media (max-width:960px){
   .hero-grid,.contact-grid,.fleet-grid{grid-template-columns:1fr}
   .hero-grid>*,.contact-grid>*{min-width:0}
-  .t-route>div{min-width:0}
-  .t-city{font-size:24px}
+  .t-route>div:not(.t-line){min-width:0}
+  .t-city{font-size:22px}
+  .t-line{min-width:36px}
   .t-meta{grid-template-columns:1fr 1fr;gap:10px}
   .t-meta div:last-child{grid-column:1/-1}
   .svc-grid,.steps,.tier-grid,.rev-grid{grid-template-columns:1fr}
