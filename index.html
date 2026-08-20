@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Northern Lights & Day Tours in Tromsø — Free Airport Transfer | Northride</title>
-<meta name="description" content="Private northern lights tours and Arctic day tours from Tromsø. Book any tour and your Tromsø Airport to city centre transfer is included free. Licensed Norwegian company.">
+<title>Private Northern Lights & Arctic Day Tours in Tromsø | Northride</title>
+<meta name="description" content="Private northern lights hunts and scenic Arctic day tours from Tromsø — your own guide, your own vehicle, never shared. Senja, Lyngen, Sommarøy and beyond. Licensed Norwegian tour company.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,340;0,9..144,420;0,9..144,560;1,9..144,380&family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -88,9 +88,13 @@ header{
     var(--night);
   overflow:hidden;
 }
+/* hero video */
+.hero-media{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.hero-media video{width:100%;height:100%;object-fit:cover;object-position:50% 45%;display:block}
+.hero-media::after{content:"";position:absolute;inset:0;background:linear-gradient(rgba(10,17,31,.55), rgba(10,17,31,.9))}
 /* aurora ribbon */
 header::before{
-  content:"";position:absolute;top:-140px;left:8%;width:84%;height:340px;
+  content:"";position:absolute;z-index:1;top:-140px;left:8%;width:84%;height:340px;
   background:linear-gradient(100deg, transparent, rgba(67,227,166,.16) 30%, rgba(120,190,255,.10) 55%, transparent 80%);
   filter:blur(46px);transform:skewY(-5deg);
   animation:aurora 14s var(--ease) infinite alternate;
@@ -100,7 +104,8 @@ header::before{
   from{transform:skewY(-5deg) translateX(-3%);opacity:.75}
   to{transform:skewY(-4deg) translateX(4%);opacity:1}
 }
-.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:64px;align-items:center;position:relative}
+.hero-grid{position:relative;z-index:2}
+.hero-grid>div{max-width:780px}
 .badge{
   display:inline-flex;align-items:center;gap:9px;
   font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;
@@ -163,6 +168,19 @@ section{padding:110px 0;position:relative}
   position:absolute;inset:auto 0 0 0;padding:70px 26px 22px;
   background:linear-gradient(transparent, rgba(10,17,31,.92));
   font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-soft);
+}
+
+/* aurora gallery */
+.lights{background:var(--night-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.gal{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:240px;gap:16px}
+.gal figure{position:relative;border-radius:var(--radius);overflow:hidden;border:1px solid var(--line)}
+.gal figure:first-child{grid-column:span 2;grid-row:span 2}
+.gal img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease)}
+.gal figure:hover img{transform:scale(1.045)}
+.gal figcaption{
+  position:absolute;inset:auto 0 0 0;padding:50px 20px 16px;
+  background:linear-gradient(transparent, rgba(10,17,31,.9));
+  font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-soft);
 }
 
 /* services as tickets */
@@ -293,6 +311,7 @@ body > footer{border-top:1px solid var(--line);padding:44px 0;background:var(--n
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
   .rv{opacity:1;transform:none}
+  .hero-media{display:none}
   html{scroll-behavior:auto}
 }
 @media (max-width:960px){
@@ -304,6 +323,8 @@ body > footer{border-top:1px solid var(--line);padding:44px 0;background:var(--n
   .t-meta{grid-template-columns:1fr 1fr;gap:10px}
   .t-meta div:last-child{grid-column:1/-1}
   .svc-grid,.steps,.tier-grid,.rev-grid{grid-template-columns:1fr}
+  .gal{grid-template-columns:1fr 1fr;grid-auto-rows:180px}
+  .gal figure:first-child{grid-column:span 2}
   .tier-vip{transform:none}
   .trust-bar{gap:22px}
   .wa-long{display:none}
@@ -325,10 +346,9 @@ body > footer{border-top:1px solid var(--line);padding:44px 0;background:var(--n
     <a class="logo" href="#">North<span>ride</span></a>
     <div class="nav-links">
       <a href="#tours">Tours</a>
+      <a href="#lights">The lights</a>
       <a href="#fleet">Fleet</a>
-      <a href="#included">What's included</a>
       <a href="#how">How it works</a>
-      <a href="/blog">Blog</a>
       <a href="#contact">Contact</a>
     </div>
     <a class="btn btn-gold btn-sm" href="https://app.bookspot.io/widget/v3?widgetId=eedd3d71-fbe0-4411-952e-723609b4b73e">Book online</a>
@@ -336,11 +356,16 @@ body > footer{border-top:1px solid var(--line);padding:44px 0;background:var(--n
 </nav>
 
 <header>
+  <div class="hero-media" aria-hidden="true">
+    <video autoplay muted loop playsinline preload="metadata" poster="assets/hero-poster.jpg">
+      <source src="assets/hero-video.mp4" type="video/mp4">
+    </video>
+  </div>
   <div class="wrap hero-grid">
     <div>
-      <div class="badge"><i></i>Licensed Norwegian tour &amp; transport company</div>
-      <h1>Arctic tours from Tromsø, <em>transfer included.</em></h1>
-      <p class="lede">Private northern lights tours and scenic day tours across Northern Norway — and when you book any tour, your Tromsø Airport to city centre transfer is <b style="color:var(--gold-soft)">free</b>.</p>
+      <div class="badge"><i></i>Licensed Norwegian tour company · Tromsø</div>
+      <h1>Private Arctic tours, <em>under the northern lights.</em></h1>
+      <p class="lede">Private northern lights hunts and scenic day tours from Tromsø — your own local guide, your own premium vehicle, never shared with strangers.</p>
       <div class="hero-actions">
         <a class="btn btn-gold" href="https://app.bookspot.io/widget/v3?widgetId=eedd3d71-fbe0-4411-952e-723609b4b73e">Book a tour</a>
         <a class="btn btn-ghost" href="https://api.whatsapp.com/send?phone=4794449990">WhatsApp us</a>
@@ -348,37 +373,12 @@ body > footer{border-top:1px solid var(--line);padding:44px 0;background:var(--n
       </div>
       <p class="hero-note">Prefer not to book online? Send your request and receive a tailored offer within 1–8 hours.</p>
       <div class="trust-bar">
-        <div><b>500+</b><span>guests driven</span></div>
+        <div><b>500+</b><span>guests guided</span></div>
         <div><b>5.0 ★</b><span>Tripadvisor rating</span></div>
-        <div><b>0 kr</b><span>airport transfer with any tour</span></div>
         <div><b>100%</b><span>licensed &amp; insured</span></div>
       </div>
     </div>
 
-    <!-- Signature: the route ticket -->
-    <aside class="ticket" aria-label="Example tour booking">
-      <div class="t-head"><span>Example tour booking</span><b>NR-0147</b></div>
-      <div class="t-route">
-        <div>
-          <div class="t-city">Tromsø</div>
-          <div class="t-code">Northern lights tour</div>
-        </div>
-        <div class="t-line"></div>
-        <div style="text-align:right">
-          <div class="t-city">Aurora</div>
-          <div class="t-code">Guided chase · private</div>
-        </div>
-      </div>
-      <div class="t-meta">
-        <div><small>Guests</small><span>Family of 5</span></div>
-        <div><small>Vehicle</small><span>Mercedes V-Class</span></div>
-        <div><small>Airport transfer</small><span style="color:var(--aurora);white-space:nowrap">Free · 0 kr</span></div>
-      </div>
-      <div class="t-foot">
-        <span>Tour booked · TOS → city centre free</span>
-        <span>Offer within <b>1–8 h</b></span>
-      </div>
-    </aside>
   </div>
 </header>
 
@@ -411,15 +411,15 @@ body > footer{border-top:1px solid var(--line);padding:44px 0;background:var(--n
     </div>
     <div class="svc-grid">
       <article class="svc rv">
-        <span class="tag">Night · Sep–Apr</span>
-        <h3>Northern lights tours</h3>
-        <p>A private aurora chase — we read the forecast, cross to clearer skies when needed, and stay out until you've seen the lights, not until a clock says stop.</p>
+        <span class="tag">Night · Sep–Apr · 6–8 h</span>
+        <h3>Private northern lights hunt</h3>
+        <p>A private aurora hunt with a local guide — we read the forecast, adapt the route all evening, and take you away from city lights to where your chances are best. Free photos included.</p>
         <div class="route">Tromsø → <b>Wherever the sky is clear</b></div>
       </article>
       <article class="svc rv">
         <span class="tag">Day tours</span>
         <h3>Fjord &amp; island day tours</h3>
-        <p>Sommarøy's white beaches, the Lyngen Alps, Senja's cliffs — full-day scenic tours with photo stops, local stories, and no rushing.</p>
+        <p>Sommarøy's white beaches, the Lyngen Alps, Senja's cliffs — full-day guided round trips from Tromsø with photo stops, local stories, and no rushing.</p>
         <div class="route">Tromsø → <b>Sommarøy · Lyngen · Senja</b></div>
       </article>
       <article class="svc rv">
@@ -429,7 +429,24 @@ body > footer{border-top:1px solid var(--line);padding:44px 0;background:var(--n
         <div class="route">Your wishes → <b>Our route planning</b></div>
       </article>
     </div>
-    <div class="sla rv">◈ &nbsp;Book any tour → Tromsø Airport ↔ city centre transfer included free</div>
+    <div class="sla rv">◈ &nbsp;Private tours only — your family or friends, never a shared bus</div>
+  </div>
+</section>
+
+<section class="lights" id="lights">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="eyebrow">The lights</div>
+      <h2>What a good night looks like.</h2>
+      <p class="lede">Photographed on our own tours around Senja and Lyngen — far from city lights, where the sky does the talking.</p>
+    </div>
+    <div class="gal rv">
+      <figure><img src="assets/aurora/aurora-1.jpg" alt="Northern lights over snow-covered mountains and a fjord at Senja" loading="lazy"><figcaption>Senja · aurora over the fjord</figcaption></figure>
+      <figure><img src="assets/aurora/aurora-2.jpg" alt="Green aurora arc above the Lyngen Alps and a calm fjord" loading="lazy"><figcaption>Lyngen Alps</figcaption></figure>
+      <figure><img src="assets/aurora/aurora-5.jpg" alt="Purple and green northern lights above a coastal village on Senja" loading="lazy"><figcaption>Senja · purple night</figcaption></figure>
+      <figure><img src="assets/aurora/aurora-3.jpg" alt="Aurora bands reflected in the sea at a Senja beach" loading="lazy"><figcaption>Senja · February</figcaption></figure>
+      <figure><img src="assets/aurora/aurora-4.jpg" alt="Northern lights above a snow-covered forest" loading="lazy"><figcaption>Senja · forest road</figcaption></figure>
+    </div>
   </div>
 </section>
 
@@ -437,8 +454,8 @@ body > footer{border-top:1px solid var(--line);padding:44px 0;background:var(--n
   <div class="wrap">
     <div class="sec-head rv">
       <div class="eyebrow">Tour packages</div>
-      <h2>Book a tour. The airport transfer is on us.</h2>
-      <p class="lede">Every package is private — your own vehicle, your own driver-guide. Book any tour and your Tromsø Airport ↔ city centre transfer is included at no charge.</p>
+      <h2>Every tour is private. Every seat is yours.</h2>
+      <p class="lede">Your own vehicle, your own driver-guide — and for larger groups we simply send more cars.</p>
     </div>
     <div class="tier-grid rv">
       <article class="tier">
@@ -447,7 +464,7 @@ body > footer{border-top:1px solid var(--line);padding:44px 0;background:var(--n
         <ul>
           <li>Fjord &amp; island day tour — Sommarøy, Lyngen or Senja</li>
           <li>Photo stops &amp; local guiding, no rushing</li>
-          <li>Free TOS ↔ city centre airport transfer</li>
+          <li>Hotel pickup &amp; drop-off in Tromsø</li>
         </ul>
         <a class="btn btn-ghost" href="https://api.whatsapp.com/send?phone=4794449990">Request offer</a>
       </article>
@@ -457,10 +474,10 @@ body > footer{border-top:1px solid var(--line);padding:44px 0;background:var(--n
         <div class="price">on request <small>per vehicle</small></div>
         <ul>
           <li>Private aurora chase — we follow clear skies</li>
-          <li>Mercedes V-Class, warm drinks on board</li>
-          <li>Aurora forecast reading &amp; photo help</li>
+          <li>Mercedes V-Class, warm drinks &amp; snacks on board</li>
+          <li>Aurora forecast reading &amp; free photos</li>
           <li>Child seats on request, at no charge</li>
-          <li>Free TOS ↔ city centre airport transfer</li>
+          <li>Hotel pickup &amp; drop-off in Tromsø</li>
         </ul>
         <a class="btn btn-gold" href="https://api.whatsapp.com/send?phone=4794449990">Request tour offer</a>
       </article>
@@ -470,28 +487,27 @@ body > footer{border-top:1px solid var(--line);padding:44px 0;background:var(--n
         <ul>
           <li>Larger groups, agencies &amp; multi-stop days</li>
           <li>Custom itineraries &amp; photography trips</li>
-          <li>Free TOS ↔ city centre airport transfer</li>
+          <li>Hotel pickup &amp; drop-off in Tromsø</li>
         </ul>
         <a class="btn btn-ghost" href="mailto:booking@northride.no">Plan with us</a>
       </article>
     </div>
-    <p class="tier-note rv">Prices are per vehicle, not per person — a family of five tours for the same price as one guest. No prepayment to request. Small fleet, high season — winter dates fill early.</p>
   </div>
 </section>
 
 <section id="included">
   <div class="wrap">
     <div class="sec-head rv">
-      <div class="eyebrow">What's included</div>
-      <h2>One booking covers your whole arrival.</h2>
-      <p class="lede">Book a tour and tell us your flight — we handle the rest, from the arrivals hall to the aurora.</p>
+      <div class="eyebrow">Included in every tour</div>
+      <h2>Everything handled, from your hotel door.</h2>
+      <p class="lede">Book a tour and tell us where you're staying — we plan the rest, from pickup to the last photo.</p>
     </div>
     <div class="svc-grid">
       <article class="svc rv">
-        <span class="tag">Free with any tour</span>
-        <h3>Airport transfer · 0 kr</h3>
-        <p>Book any tour and your private Tromsø Airport to city centre transfer is included free. Met on arrival, flight tracked, luggage handled.</p>
-        <div class="route">TOS → <b>City centre · included</b></div>
+        <span class="tag">Local knowledge</span>
+        <h3>Your own driver-guide</h3>
+        <p>A local, English-speaking guide who reads the aurora and weather forecasts, knows the back roads, and adapts the route through the evening.</p>
+        <div class="route">Forecast → <b>Best sky of the night</b></div>
       </article>
       <article class="svc rv">
         <span class="tag">Every tour</span>
@@ -502,7 +518,7 @@ body > footer{border-top:1px solid var(--line);padding:44px 0;background:var(--n
       <article class="svc rv">
         <span class="tag">Comfort</span>
         <h3>Premium, winter-ready vehicles</h3>
-        <p>Mercedes V-Class and Volvo XC90 — heated cabins, space for the whole family, and calm, experienced winter driving.</p>
+        <p>Mercedes V-Class and Volvo XC90 — heated cabins, space for the whole family, and calm, experienced winter driving. Bigger group? We send more cars.</p>
         <div class="route">Arctic roads → <b>Handled</b></div>
       </article>
     </div>
@@ -517,16 +533,16 @@ body > footer{border-top:1px solid var(--line);padding:44px 0;background:var(--n
     </div>
     <div class="rev-grid rv">
       <blockquote class="rev">
-        <p>"Our driver was waiting with a sign, helped with every suitcase, and the drive along the fjord felt like part of the holiday."</p>
-        <footer>— Guest from Germany · Airport → Sommarøy</footer>
+        <p>"Our guide picked us up at the hotel, stopped wherever we wanted photos, and the drive along the fjord felt like the best part of the holiday."</p>
+        <footer>— Guest from Germany · Sommarøy day tour</footer>
       </blockquote>
       <blockquote class="rev">
-        <p>"Flight was delayed two hours. They tracked it, adjusted, and never charged extra. That's when we knew we chose right."</p>
-        <footer>— Family of four · TOS → Lyngen</footer>
+        <p>"Cloudy in Tromsø, so our guide drove us out to Lyngen where the sky opened. Two hours of dancing lights and he took all the photos for us."</p>
+        <footer>— Family of four · Northern lights hunt</footer>
       </blockquote>
       <blockquote class="rev">
-        <p>"Booked VIP for my parents. Child seat ready, warm car, calm winter driving. Worth every krone."</p>
-        <footer>— Local guest · Tromsø → Senja</footer>
+        <p>"Booked the Senja tour for my parents. Child seat ready for my son, warm car, calm winter driving. Worth every krone."</p>
+        <footer>— Local guest · Senja day tour</footer>
       </blockquote>
     </div>
   </div>
@@ -537,7 +553,7 @@ body > footer{border-top:1px solid var(--line);padding:44px 0;background:var(--n
     <div class="sec-head rv">
       <div class="eyebrow">How it works</div>
       <h2>Pick a tour. We plan everything else.</h2>
-      <p class="lede">You tell us which tour, your dates, and how many guests — we plan the route, watch the weather, and send a clear offer with your free airport transfer included.</p>
+      <p class="lede">You tell us which tour, your dates, and how many guests — we plan the route, watch the weather, and send one clear offer.</p>
     </div>
     <div class="steps rv">
       <div class="step">
@@ -548,53 +564,15 @@ body > footer{border-top:1px solid var(--line);padding:44px 0;background:var(--n
       <div class="step">
         <span class="n">2.</span>
         <h3>We plan your day</h3>
-        <p>We check the aurora and weather forecast, plan the route and timing, and match the right vehicle. Add your flight number and the airport transfer is included free.</p>
+        <p>We check the aurora and weather forecast, plan the route and timing, and match the right vehicle for your group.</p>
       </div>
       <div class="step">
         <span class="n">3.</span>
         <h3>Receive your offer</h3>
-        <p>You receive one clear private offer — tour and airport transfer together. Confirm only when everything feels right.</p>
+        <p>You receive one clear private offer. Confirm only when everything feels right.</p>
       </div>
     </div>
     <div class="sla rv">◈ &nbsp;Tailored offer within 1–8 hours</div>
-  </div>
-</section>
-
-<section id="blog">
-  <div class="wrap">
-    <div class="sec-head rv" style="display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;max-width:none">
-      <div>
-        <div class="eyebrow">Blog</div>
-        <h2>Guides for private travel in Tromsø.</h2>
-      </div>
-      <a class="btn btn-ghost btn-sm" href="/blog">View all guides</a>
-    </div>
-    <div class="blog-list rv">
-      <a class="post" href="/blog?post=how-much-is-chauffeur-service">
-        <time>May 25, 2026</time>
-        <div>
-          <h3>How much is chauffeur service, really?</h3>
-          <p>What affects pricing, what's included, and how to compare private transport quotes fairly.</p>
-        </div>
-        <span class="arr">→</span>
-      </a>
-      <a class="post" href="/blog?post=premium-airport-transfer-service">
-        <time>May 24, 2026</time>
-        <div>
-          <h3>What a premium airport transfer should do</h3>
-          <p>More than a pickup — simplifying Arctic travel with comfort, timing, and local expertise.</p>
-        </div>
-        <span class="arr">→</span>
-      </a>
-      <a class="post" href="/blog?post=private-transfer-in-tromso-what-to-expect">
-        <time>May 23, 2026</time>
-        <div>
-          <h3>Private transfer in Tromsø: what to expect</h3>
-          <p>When tailored transport makes sense, and how it makes Arctic travel easier.</p>
-        </div>
-        <span class="arr">→</span>
-      </a>
-    </div>
   </div>
 </section>
 
@@ -603,7 +581,7 @@ body > footer{border-top:1px solid var(--line);padding:44px 0;background:var(--n
     <div class="rv">
       <div class="eyebrow">Contact</div>
       <h2>Tell us your dates. We'll plan your tour.</h2>
-      <p class="lede">Which tour, when, and for how many guests — we plan the route and timing, then send one clear offer with your free airport transfer included. Or book instantly online.</p>
+      <p class="lede">Which tour, when, and for how many guests — we plan the route and timing, then send one clear offer. Or book instantly online.</p>
       <div class="c-actions">
         <a class="btn btn-gold" href="https://api.whatsapp.com/send?phone=4794449990">WhatsApp · +47 944 49 990</a>
         <a class="btn btn-ghost" href="mailto:booking@northride.no">booking@northride.no</a>
@@ -616,7 +594,6 @@ body > footer{border-top:1px solid var(--line);padding:44px 0;background:var(--n
         <li>Which tour you'd like (or your idea)</li>
         <li>Dates and number of guests</li>
         <li>Your hotel or pickup point in Tromsø</li>
-        <li>Arrival flight number — for your free airport transfer</li>
         <li>Special wishes or extra stops</li>
       </ul>
     </div>
@@ -626,7 +603,7 @@ body > footer{border-top:1px solid var(--line);padding:44px 0;background:var(--n
 <footer>
   <div class="wrap foot-in">
     <span><b style="color:var(--snow)">Northride AS</b> · Private Arctic tours from Tromsø</span>
-    <span>Licensed Norwegian tour &amp; transport company</span>
+    <span>Licensed Norwegian tour company</span>
   </div>
 </footer>
 
