@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<meta charset="UTF-8">
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17863576644"></script>
 <script>
@@ -10,7 +11,24 @@
 
   gtag('config', 'AW-17863576644');
 </script>
-<meta charset="UTF-8">
+<!-- Event snippet for Submit lead form conversion (fires on WhatsApp / email / Book online clicks) -->
+<script>
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href]');
+    if (!a) return;
+    var href = a.getAttribute('href');
+    if (!/^(mailto:|https:\/\/api\.whatsapp\.com|https:\/\/app\.bookspot\.io)/.test(href)) return;
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || a.target === '_blank') {
+      gtag('event', 'conversion', {'send_to': 'AW-17863576644/DX90CN6f5LEcEMSYgsZC'});
+      return;
+    }
+    e.preventDefault();
+    var done = false;
+    var go = function () { if (done) return; done = true; window.location = href; };
+    gtag('event', 'conversion', {'send_to': 'AW-17863576644/DX90CN6f5LEcEMSYgsZC', 'event_callback': go});
+    setTimeout(go, 1000);
+  });
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Blog | Northride — Private Arctic Tours in Tromsø</title>
 <meta name="description" content="Guides for private tours in Tromsø and Northern Norway: northern lights, day tours, what to pack, and Arctic travel tips.">
