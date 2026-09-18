@@ -116,9 +116,13 @@ header{
   overflow:hidden;
 }
 /* hero video */
-.hero-media{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}
-.hero-media video{width:100%;height:100%;object-fit:cover;object-position:50% 45%;display:block}
-.hero-media::after{content:"";position:absolute;inset:0;background:linear-gradient(rgba(10,17,31,.55), rgba(10,17,31,.9))}
+.hero-media{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;background:url("assets/hero-poster-desktop.jpg") 50% 50%/cover no-repeat}
+.hero-media video{width:100%;height:100%;object-fit:cover;object-position:50% 50%;display:block;filter:brightness(1.12) saturate(1.08);opacity:0;transition:opacity .8s var(--ease)}
+.hero-media video.on{opacity:1}
+@media (max-aspect-ratio:1/1){.hero-media{background-image:url("assets/hero-poster-mobile.jpg")}}
+.hero-media::after{content:"";position:absolute;inset:0;background:
+  linear-gradient(rgba(10,17,31,.30), rgba(10,17,31,.06) 22%, rgba(10,17,31,.10) 68%, rgba(10,17,31,.82)),
+  linear-gradient(90deg, rgba(10,17,31,.62), rgba(10,17,31,.40) 42%, rgba(10,17,31,.06) 78%)}
 /* aurora ribbon */
 header::before{
   content:"";position:absolute;z-index:1;top:-140px;left:8%;width:84%;height:340px;
@@ -132,6 +136,10 @@ header::before{
   to{transform:skewY(-4deg) translateX(4%);opacity:1}
 }
 .hero-grid{position:relative;z-index:2}
+header h1,header .lede,header .hero-note,header .trust-bar{text-shadow:0 2px 22px rgba(10,17,31,.7)}
+header .lede{color:#DCE5F2}
+header .hero-note{color:#B9C6DA}
+header .trust-bar small,header .trust-bar span{text-shadow:0 1px 10px rgba(10,17,31,.8)}
 .hero-grid>div{max-width:780px}
 .badge{
   display:inline-flex;align-items:center;gap:9px;
@@ -191,6 +199,7 @@ section{padding:110px 0;position:relative}
 .fleet-card{position:relative;border-radius:var(--radius);overflow:hidden;border:1px solid var(--line);min-height:340px}
 .fleet-card img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease)}
 .fleet-card:hover img{transform:scale(1.045)}
+.fleet-card img.fleet-own{object-position:50% 72%}
 .fleet-card figcaption{
   position:absolute;inset:auto 0 0 0;padding:70px 26px 22px;
   background:linear-gradient(transparent, rgba(10,17,31,.92));
@@ -224,6 +233,66 @@ section{padding:110px 0;position:relative}
 .svc .route{margin-top:24px;padding-top:20px;border-top:1px dashed var(--line);
   font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--slate-dim);letter-spacing:.06em}
 .svc .route b{color:var(--snow);font-weight:500}
+
+/* experiences — photo cards */
+.exp{background:var(--night-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.exp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.xp{
+  display:flex;flex-direction:column;overflow:hidden;
+  background:linear-gradient(170deg,var(--surface),rgba(18,30,51,.4));
+  border:1px solid var(--line);border-radius:var(--radius);
+  transition:transform .4s var(--ease),border-color .4s;
+}
+.xp:hover{transform:translateY(-6px);border-color:rgba(217,179,106,.4)}
+.xp-img{position:relative;aspect-ratio:3/2;overflow:hidden}
+.xp-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 1.2s var(--ease)}
+.xp:hover .xp-img img{transform:scale(1.045)}
+.xp-img::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(10,17,31,.55))}
+.xp-body{padding:28px 28px 30px;display:flex;flex-direction:column;flex:1}
+.xp .tag{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:14px}
+.xp h3{font-size:24px;margin-bottom:12px}
+.xp p{color:var(--slate);font-size:15.5px}
+.xp ul{list-style:none;margin:18px 0 0;flex:1}
+.xp li{display:flex;gap:12px;align-items:baseline;padding:8px 0;border-bottom:1px dashed var(--line);color:var(--slate);font-size:14.5px}
+.xp li:last-child{border-bottom:none}
+.xp li::before{content:"—";color:var(--gold);font-family:'IBM Plex Mono',monospace;font-size:13px}
+.xp .route{margin:20px 0 22px;padding-top:18px;border-top:1px dashed var(--line);
+  font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--slate-dim);letter-spacing:.06em}
+.xp .route b{color:var(--snow);font-weight:500}
+.xp .btn{justify-content:center}
+.exp-sub{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--slate-dim);margin:64px 0 24px;display:flex;align-items:center;gap:16px}
+.exp-sub::after{content:"";flex:1;height:1px;background:var(--line)}
+.exp-sub:first-of-type{margin-top:0}
+
+/* region gallery — masonry + lightbox */
+.region{background:var(--night-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.mas{columns:3;column-gap:16px}
+.mas figure{position:relative;break-inside:avoid;margin:0 0 16px;border-radius:var(--radius);overflow:hidden;border:1px solid var(--line);cursor:zoom-in;background:var(--surface)}
+.mas img{width:100%;height:auto;display:block;transition:transform 1.2s var(--ease)}
+.mas figure:hover img{transform:scale(1.045)}
+.mas figcaption{
+  position:absolute;inset:auto 0 0 0;padding:54px 20px 16px;
+  background:linear-gradient(transparent, rgba(10,17,31,.88));
+  font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-soft);
+}
+.mas figure.more{display:none}
+.mas.all figure.more{display:block}
+.mas-more{text-align:center;margin-top:12px}
+.lofoten-note{color:var(--slate);font-size:15.5px;max-width:64ch;margin:-6px 0 24px}
+.photo-credit{margin-top:26px;font-size:12.5px;line-height:1.7;color:var(--slate-dim);max-width:none}
+.photo-credit a{color:var(--slate);text-decoration:underline;text-underline-offset:3px}
+.mas figure:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.region-cta{margin-top:40px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px;
+  padding:26px 30px;border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(170deg,var(--surface),rgba(18,30,51,.4))}
+.region-cta p{color:var(--snow);font-family:'Fraunces',serif;font-size:22px;max-width:30ch}
+.lb{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;flex-direction:column;gap:16px;
+  background:rgba(6,10,19,.94);padding:24px;cursor:zoom-out}
+.lb.on{display:flex}
+.lb img{max-width:min(1200px,100%);max-height:82vh;border-radius:12px;box-shadow:0 30px 80px -20px #000}
+.lb-cap{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-soft);text-align:center}
+.lb button{position:absolute;background:rgba(18,30,51,.8);border:1px solid var(--line);color:var(--snow);width:46px;height:46px;border-radius:50%;font-size:20px;cursor:pointer;line-height:1}
+.lb button:hover{border-color:rgba(217,179,106,.5)}
+.lb-x{top:20px;right:20px}.lb-p{left:20px;top:50%;transform:translateY(-50%)}.lb-n{right:20px;top:50%;transform:translateY(-50%)}
 
 /* how it works */
 .how{background:var(--night-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
@@ -269,6 +338,7 @@ section{padding:110px 0;position:relative}
 .checklist li::before{content:"—";color:var(--gold);font-family:'IBM Plex Mono',monospace;font-size:13px}
 
 body > footer{border-top:1px solid var(--line);padding:44px 0;background:var(--night-2)}
+.foot-credit{flex-basis:100%;font-size:12.5px;opacity:.85}
 .foot-in{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;color:var(--slate-dim);font-size:13.5px}
 
 /* trust bar */
@@ -342,6 +412,7 @@ body > footer{border-top:1px solid var(--line);padding:44px 0;background:var(--n
   html{scroll-behavior:auto}
 }
 @media (max-width:960px){
+  .hero-media::after{background:linear-gradient(rgba(10,17,31,.42), rgba(10,17,31,.34) 45%, rgba(10,17,31,.85))}
   .hero-grid,.contact-grid,.fleet-grid{grid-template-columns:1fr}
   .hero-grid>*,.contact-grid>*{min-width:0}
   .t-route>div:not(.t-line){min-width:0}
@@ -349,8 +420,12 @@ body > footer{border-top:1px solid var(--line);padding:44px 0;background:var(--n
   .t-line{min-width:36px}
   .t-meta{grid-template-columns:1fr 1fr;gap:10px}
   .t-meta div:last-child{grid-column:1/-1}
-  .svc-grid,.steps,.tier-grid,.rev-grid{grid-template-columns:1fr}
+  .svc-grid,.steps,.tier-grid,.rev-grid,.exp-grid{grid-template-columns:1fr}
   .gal{grid-template-columns:1fr 1fr;grid-auto-rows:180px}
+  .mas{columns:2;column-gap:12px}
+  .mas figure{margin-bottom:12px}
+  .mas figcaption{font-size:10px;padding:40px 12px 12px;letter-spacing:.12em}
+  .region-cta p{font-size:19px}
   .gal figure:first-child{grid-column:span 2}
   .tier-vip{transform:none}
   .trust-bar{gap:22px}
@@ -373,7 +448,9 @@ body > footer{border-top:1px solid var(--line);padding:44px 0;background:var(--n
     <a class="logo" href="#">North<span>ride</span></a>
     <div class="nav-links">
       <a href="#tours">Tours</a>
+      <a href="#experiences">Experiences</a>
       <a href="#lights">The lights</a>
+      <a href="#gallery">Gallery</a>
       <a href="#fleet">Fleet</a>
       <a href="#how">How it works</a>
       <a href="/blog">Blog</a>
@@ -385,9 +462,7 @@ body > footer{border-top:1px solid var(--line);padding:44px 0;background:var(--n
 
 <header>
   <div class="hero-media" aria-hidden="true">
-    <video autoplay muted loop playsinline preload="metadata" poster="assets/hero-poster.jpg">
-      <source src="assets/hero-video.mp4" type="video/mp4">
-    </video>
+    <video muted loop playsinline preload="none" data-desktop="assets/hero-desktop.mp4" data-mobile="assets/hero-mobile.mp4"></video>
   </div>
   <div class="wrap hero-grid">
     <div>
@@ -423,8 +498,8 @@ body > footer{border-top:1px solid var(--line);padding:44px 0;background:var(--n
         <figcaption>Full fleet · Senja</figcaption>
       </figure>
       <figure class="fleet-card rv">
-        <img src="https://cdn.prod.website-files.com/6a0c3a766604e267552ede6d/6a1098300b6e0c989b0cc082_mercedes_lofoten%20(1).avif" alt="Mercedes in Lofoten" loading="lazy">
-        <figcaption>Mercedes · Lofoten</figcaption>
+        <img class="fleet-own" src="assets/fleet/fleet-tromso-bridge.jpg" alt="Northride's Mercedes V-Class and Volvo XC90 parked beneath the Tromsø Bridge" loading="lazy">
+        <figcaption>V-Class &amp; XC90 · Tromsø Bridge</figcaption>
       </figure>
     </div>
   </div>
@@ -458,6 +533,113 @@ body > footer{border-top:1px solid var(--line);padding:44px 0;background:var(--n
       </article>
     </div>
     <div class="sla rv">◈ &nbsp;Private tours only — your family or friends, never a shared bus</div>
+  </div>
+</section>
+
+<section class="exp" id="experiences">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="eyebrow">Destinations &amp; experiences</div>
+      <h2>Six ways to spend an Arctic day.</h2>
+      <p class="lede">Every one is private — your own vehicle and driver-guide, hotel pickup in Tromsø, and a day shaped around your group rather than a timetable.</p>
+    </div>
+    <div class="exp-sub rv">Scenic day tours</div>
+    <div class="exp-grid">
+      <article class="xp rv">
+        <div class="xp-img"><img src="assets/tours/sommaroy.jpg" alt="Snow-dusted white sand beach and clear Arctic water at Sommarøy" loading="lazy"></div>
+        <div class="xp-body">
+          <span class="tag">All year · 5–6 h</span>
+          <h3>Sommarøy — the Arctic Caribbean</h3>
+          <p>White coral-sand beaches and turquoise water an hour from Tromsø. We drive the scenic route across Kvaløya, past Ersfjord and the open coast, with time to walk the beaches and stop wherever the light is good.</p>
+          <ul>
+          <li>Kvaløya coastal road, fjord and beach photo stops</li>
+          <li>Time for coffee or lunch on the island</li>
+          <li>Shortest day tour — ideal for families</li>
+          </ul>
+          <div class="route">Tromsø → Kvaløya → <b>Sommarøy</b></div>
+          <a class="btn btn-ghost" href="https://api.whatsapp.com/send?phone=4794449990&amp;text=Hi%20Northride%2C%20I%20would%20like%20an%20offer%20for%20a%20private%20Sommar%C3%B8y%20day%20tour.">Request this tour</a>
+        </div>
+      </article>
+      <article class="xp rv">
+        <div class="xp-img"><img src="assets/tours/senja.jpg" alt="The sharp peak of Segla rising above the fjord on Senja" loading="lazy"></div>
+        <div class="xp-body">
+          <span class="tag">All year · 10–12 h</span>
+          <h3>Senja — Norway in miniature</h3>
+          <p>Norway's second-largest island packs sheer peaks, fishing villages and white beaches into one coastline. A long, rewarding day along the national scenic route, at your pace.</p>
+          <ul>
+          <li>Views of Segla, Tungeneset and Bergsbotn viewpoints</li>
+          <li>Ersfjord beach and the fishing villages of the outer coast</li>
+          <li>A full day — best for guests who love landscapes and photography</li>
+          </ul>
+          <div class="route">Tromsø → <b>Senja scenic route</b> → Tromsø</div>
+          <a class="btn btn-ghost" href="https://api.whatsapp.com/send?phone=4794449990&amp;text=Hi%20Northride%2C%20I%20would%20like%20an%20offer%20for%20a%20private%20Senja%20day%20tour.">Request this tour</a>
+        </div>
+      </article>
+      <article class="xp rv">
+        <div class="xp-img"><img src="assets/tours/lyngen.jpg" alt="Snow-covered Lyngen Alps rising above a fjord with red barns on the shore" loading="lazy"></div>
+        <div class="xp-body">
+          <span class="tag">All year · 7–9 h</span>
+          <h3>Lyngen Alps — peaks above the fjord</h3>
+          <p>Glaciated summits rising straight out of the sea. We cross the Ullsfjord by ferry and follow the Lyngenfjord shoreline, with stops under some of Northern Norway's highest mountains.</p>
+          <ul>
+          <li>Fjord ferry crossing included in the route</li>
+          <li>Alpine scenery, quiet villages and shoreline photo stops</li>
+          <li>Also a favourite dark-sky area for aurora in winter</li>
+          </ul>
+          <div class="route">Tromsø → Breivikeidet ferry → <b>Lyngen</b></div>
+          <a class="btn btn-ghost" href="https://api.whatsapp.com/send?phone=4794449990&amp;text=Hi%20Northride%2C%20I%20would%20like%20an%20offer%20for%20a%20private%20Lyngen%20Alps%20day%20tour.">Request this tour</a>
+        </div>
+      </article>
+    </div>
+    <div class="exp-sub rv">Arctic wildlife &amp; culture</div>
+    <div class="exp-grid">
+      <article class="xp rv">
+        <div class="xp-img"><img src="assets/tours/husky.jpg" alt="Alaskan huskies in harness, ready to pull a sled through the snow" loading="lazy"></div>
+        <div class="xp-body">
+          <span class="tag">Nov–Apr · Half day</span>
+          <h3>Private husky experience</h3>
+          <p>Meet the dogs, learn how a team works, and head out across the snow by sled. We arrange your session with a trusted local kennel and drive you there and back privately.</p>
+          <ul>
+          <li>Private transport from your hotel — no shared bus</li>
+          <li>Drive your own sled or ride as a passenger</li>
+          <li>Warm suits and boots provided at the kennel</li>
+          </ul>
+          <div class="route">Tromsø → <b>Husky kennel</b> → Tromsø</div>
+          <a class="btn btn-ghost" href="https://api.whatsapp.com/send?phone=4794449990&amp;text=Hi%20Northride%2C%20I%20would%20like%20an%20offer%20for%20a%20private%20husky%20tour.">Request this tour</a>
+        </div>
+      </article>
+      <article class="xp rv">
+        <div class="xp-img"><img src="assets/tours/whales.jpg" alt="Two orcas surfacing in a Norwegian fjord" loading="lazy"></div>
+        <div class="xp-body">
+          <span class="tag">Nov–Jan · Full day</span>
+          <h3>Private whale watching</h3>
+          <p>Each winter, orcas and humpbacks follow the herring into the fjords north of Tromsø. We take you to the whales in comfort and arrange your place on a boat with a responsible, licensed operator.</p>
+          <ul>
+          <li>Private drive north through fjord landscapes</li>
+          <li>Orcas and humpback whales in their natural habitat</li>
+          <li>Wild animals — sightings are likely in season, never guaranteed</li>
+          </ul>
+          <div class="route">Tromsø → <b>Skjervøy whale fjords</b> → Tromsø</div>
+          <a class="btn btn-ghost" href="https://api.whatsapp.com/send?phone=4794449990&amp;text=Hi%20Northride%2C%20I%20would%20like%20an%20offer%20for%20a%20private%20whale%20watching%20tour.">Request this tour</a>
+        </div>
+      </article>
+      <article class="xp rv">
+        <div class="xp-img"><img src="assets/tours/reindeer.jpg" alt="A reindeer grazing in the snow with Tromsø's mountains behind" loading="lazy"></div>
+        <div class="xp-body">
+          <span class="tag">Nov–Apr · Half day</span>
+          <h3>Private reindeer &amp; Sami visit</h3>
+          <p>Feed the reindeer by hand, sit by the fire in a lavvu and hear Sami stories and joik from the people whose herd it is. A calm, warm experience that works for every age.</p>
+          <ul>
+          <li>Reindeer feeding and optional sledding</li>
+          <li>Sami culture, storytelling and a traditional meal</li>
+          <li>Easy to combine with a northern lights evening</li>
+          </ul>
+          <div class="route">Tromsø → <b>Sami reindeer camp</b> → Tromsø</div>
+          <a class="btn btn-ghost" href="https://api.whatsapp.com/send?phone=4794449990&amp;text=Hi%20Northride%2C%20I%20would%20like%20an%20offer%20for%20a%20private%20reindeer%20and%20Sami%20visit.">Request this tour</a>
+        </div>
+      </article>
+    </div>
+    <p class="tier-note rv">Durations are approximate and depend on season, weather and ferry times · Activities are run with licensed local partners · Prices on request, per vehicle</p>
   </div>
 </section>
 
@@ -519,6 +701,64 @@ body > footer{border-top:1px solid var(--line);padding:44px 0;background:var(--n
         </ul>
         <a class="btn btn-ghost" href="mailto:booking@northride.no">Plan with us</a>
       </article>
+    </div>
+  </div>
+</section>
+
+<section class="region" id="gallery">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="eyebrow">Gallery</div>
+      <h2>The Arctic, season by season.</h2>
+      <p class="lede">The landscapes of Northern Norway that our tours take you through — polar night and midnight sun, fjords, peaks and white-sand beaches, plus a look at Lofoten further south, as seen by photographers who love this region.</p>
+    </div>
+    <div class="mas rv" id="mas">
+      <figure tabindex="0" role="button" aria-label="View larger: Tromsø · polar night"><img src="assets/gallery/tromso-bridge-night.jpg" alt="Aerial view of the Tromsø Bridge and the city lit up on a winter night" width="1000" height="1250" loading="lazy"><figcaption>Tromsø · polar night</figcaption></figure>
+      <figure tabindex="0" role="button" aria-label="View larger: Sommarøy · summer"><img src="assets/gallery/sommaroy-aerial.jpg" alt="Green islands, white beaches and turquoise water around Sommarøy in summer" width="1300" height="867" loading="lazy"><figcaption>Sommarøy · summer</figcaption></figure>
+      <figure tabindex="0" role="button" aria-label="View larger: Reindeer · winter forest"><img src="assets/gallery/reindeer-forest.jpg" alt="A reindeer standing in a snow-covered birch forest" width="1300" height="867" loading="lazy"><figcaption>Reindeer · winter forest</figcaption></figure>
+      <figure tabindex="0" role="button" aria-label="View larger: Lyngen Alps · winter"><img src="assets/gallery/lyngen-peaks.jpg" alt="Jagged snow-covered peaks of the Lyngen Alps seen through bare birch trees" width="1300" height="815" loading="lazy"><figcaption>Lyngen Alps · winter</figcaption></figure>
+      <figure tabindex="0" role="button" aria-label="View larger: Arctic Cathedral · Tromsø"><img src="assets/gallery/arctic-cathedral.jpg" alt="The Arctic Cathedral in Tromsø illuminated at night" width="1300" height="743" loading="lazy"><figcaption>Arctic Cathedral · Tromsø</figcaption></figure>
+      <figure tabindex="0" role="button" aria-label="View larger: Segla, Senja · autumn"><img src="assets/gallery/segla-autumn.jpg" alt="Autumn colours on the ridge below the Segla peak on Senja" width="1000" height="1502" loading="lazy"><figcaption>Segla, Senja · autumn</figcaption></figure>
+      <figure tabindex="0" role="button" aria-label="View larger: The outer coast"><img src="assets/gallery/arctic-islands.jpg" alt="Turquoise sea and small islands off the outer coast under summer clouds" width="1300" height="867" loading="lazy"><figcaption>The outer coast</figcaption></figure>
+      <figure tabindex="0" role="button" aria-label="View larger: Lavvu under the aurora"><img src="assets/gallery/lavvu-aurora.jpg" alt="A glowing lavvu tent under green northern lights" width="1300" height="867" loading="lazy"><figcaption>Lavvu under the aurora</figcaption></figure>
+      <figure tabindex="0" role="button" aria-label="View larger: White sand beaches"><img src="assets/gallery/sommaroy-beach.jpg" alt="White sand beach and clear shallow water with mountains beyond" width="1000" height="1500" loading="lazy"><figcaption>White sand beaches</figcaption></figure>
+      <figure tabindex="0" role="button" aria-label="View larger: Arctic coast · winter"><img src="assets/gallery/winter-coast.jpg" alt="A red fishing cabin on a pier beside a snowy beach and steep white mountains" width="1300" height="794" loading="lazy"><figcaption>Arctic coast · winter</figcaption></figure>
+      <figure tabindex="0" role="button" aria-label="View larger: Lyngenfjord · summer evening"><img src="assets/gallery/lyngen-summer.jpg" alt="A mountain stream running down green slopes to the fjord with the Lyngen Alps behind" width="1300" height="885" loading="lazy"><figcaption>Lyngenfjord · summer evening</figcaption></figure>
+      <figure tabindex="0" role="button" aria-label="View larger: Midnight sun"><img src="assets/gallery/midnight-sun.jpg" alt="A red wooden cabin on stilts over calm water under an orange sky" width="1300" height="867" loading="lazy"><figcaption>Midnight sun</figcaption></figure>
+      <figure tabindex="0" role="button" aria-label="View larger: Tromsø harbour"><img src="assets/gallery/tromso-harbour.jpg" alt="Sailing boats and old wharf houses mirrored in the still water of Tromsø harbour" width="1300" height="771" loading="lazy"><figcaption>Tromsø harbour</figcaption></figure>
+      <figure tabindex="0" role="button" aria-label="View larger: Okshornan · Senja"><img src="assets/gallery/okshornan-winter.jpg" alt="The jagged snow-covered Okshornan peaks seen across the water from the rocks at Tungeneset on Senja" width="1300" height="867" loading="lazy"><figcaption>Okshornan · Senja</figcaption></figure>
+      <figure tabindex="0" role="button" aria-label="View larger: Blåisvatnet · Lyngen"><img src="assets/gallery/blaisvatnet.jpg" alt="The turquoise glacial lake Blåisvatnet beneath the peaks of the Lyngen Alps" width="1300" height="867" loading="lazy"><figcaption>Blåisvatnet · Lyngen</figcaption></figure>
+      <figure class="more" tabindex="0" role="button" aria-label="View larger: The coastal road"><img src="assets/gallery/coastal-road.jpg" alt="An empty coastal road curving past a cabin toward mountains under an orange midnight-sun sky" width="1300" height="625" loading="lazy"><figcaption>The coastal road</figcaption></figure>
+      <figure class="more" tabindex="0" role="button" aria-label="View larger: Still water · misty fjord"><img src="assets/gallery/misty-fjord.jpg" alt="Snow-dusted mountains mirrored in a still, misty fjord" width="1300" height="866" loading="lazy"><figcaption>Still water · misty fjord</figcaption></figure>
+      <figure class="more" tabindex="0" role="button" aria-label="View larger: Red boathouse · Troms"><img src="assets/gallery/red-boathouse.jpg" alt="A weathered red boathouse on a rocky shore beneath a mountain" width="1300" height="867" loading="lazy"><figcaption>Red boathouse · Troms</figcaption></figure>
+      <figure class="more" tabindex="0" role="button" aria-label="View larger: Polar night colours"><img src="assets/gallery/polar-night-sky.jpg" alt="A house among bare birch trees under a pink and purple polar-night sky" width="1300" height="646" loading="lazy"><figcaption>Polar night colours</figcaption></figure>
+      <figure class="more" tabindex="0" role="button" aria-label="View larger: Mountain mirror · autumn"><img src="assets/gallery/mountain-mirror.jpg" alt="A mountain reflected in a calm lake ringed by autumn birch forest" width="1300" height="867" loading="lazy"><figcaption>Mountain mirror · autumn</figcaption></figure>
+      <figure class="more" tabindex="0" role="button" aria-label="View larger: Blue hour on the fjord"><img src="assets/gallery/blue-hour-fjord.jpg" alt="Snow-covered mountains and small fishing boats on a deep blue fjord" width="1300" height="1300" loading="lazy"><figcaption>Blue hour on the fjord</figcaption></figure>
+      <figure class="more" tabindex="0" role="button" aria-label="View larger: Wooden boat on the shore"><img src="assets/gallery/wooden-boat.jpg" alt="A traditional wooden boat pulled up on a pebble beach" width="1300" height="867" loading="lazy"><figcaption>Wooden boat on the shore</figcaption></figure>
+      <figure class="more" tabindex="0" role="button" aria-label="View larger: Harbour front · Tromsø"><img src="assets/gallery/harbour-front.jpg" alt="Wooden harbour-front buildings and moored boats reflected in calm water in Tromsø" width="1300" height="731" loading="lazy"><figcaption>Harbour front · Tromsø</figcaption></figure>
+      <figure class="more" tabindex="0" role="button" aria-label="View larger: Tromsø harbour · winter"><img src="assets/gallery/harbour-winter.jpg" alt="A boat moored in Tromsø harbour with the bridge and snow-covered mountains behind" width="1300" height="870" loading="lazy"><figcaption>Tromsø harbour · winter</figcaption></figure>
+      <figure class="more" tabindex="0" role="button" aria-label="View larger: The Devil's Teeth · Senja"><img src="assets/gallery/okshornan-summer.jpg" alt="The serrated ridge of Okshornan rising from the sea under low cloud" width="1300" height="846" loading="lazy"><figcaption>The Devil's Teeth · Senja</figcaption></figure>
+      <figure class="more" tabindex="0" role="button" aria-label="View larger: The fjord from above"><img src="assets/gallery/fjord-from-above.jpg" alt="A long blue fjord winding between green mountainsides, seen from high above" width="1000" height="1500" loading="lazy"><figcaption>The fjord from above</figcaption></figure>
+      <figure class="more" tabindex="0" role="button" aria-label="View larger: Cairn above the fjord"><img src="assets/gallery/fjord-cairn.jpg" alt="A stone cairn on a mountain top overlooking a fjord and distant peaks" width="1300" height="867" loading="lazy"><figcaption>Cairn above the fjord</figcaption></figure>
+      <figure class="more" tabindex="0" role="button" aria-label="View larger: Autumn by the fjord"><img src="assets/gallery/fjord-autumn.jpg" alt="Golden autumn birch trees beside a calm fjord with mountains beyond" width="1300" height="867" loading="lazy"><figcaption>Autumn by the fjord</figcaption></figure>
+    </div>
+    <div class="mas-more rv"><button class="btn btn-ghost" id="masMore" type="button" aria-expanded="false" aria-controls="mas">Show all 28 photos</button></div>
+    <div class="exp-sub rv" style="margin-top:56px">Lofoten</div>
+    <p class="lofoten-note rv">Lofoten is its own region, a full day's drive south-west of Tromsø, so it is not part of our day tours. If it is on your list, ask us about a custom multi-day journey.</p>
+    <div class="mas rv">
+      <figure tabindex="0" role="button" aria-label="View larger: Sakrisøy in winter · Lofoten"><img src="assets/gallery/lofoten-sakrisoy-winter.jpg" alt="Yellow wooden cabins in the snow beneath a steep white mountain at Sakrisøy in Lofoten" width="1000" height="1250" loading="lazy"><figcaption>Sakrisøy in winter · Lofoten</figcaption></figure>
+      <figure tabindex="0" role="button" aria-label="View larger: Hamnøy · Lofoten"><img src="assets/gallery/lofoten-hamnoy-winter.jpg" alt="Red fishing cabins on snow-covered rocks beneath a sharp white peak at Hamnøy in Lofoten" width="1300" height="867" loading="lazy"><figcaption>Hamnøy · Lofoten</figcaption></figure>
+      <figure tabindex="0" role="button" aria-label="View larger: Henningsvær pitch · Lofoten"><img src="assets/gallery/lofoten-henningsvaer.jpg" alt="The football pitch on a rocky islet at Henningsvær in Lofoten, seen from directly above" width="1300" height="974" loading="lazy"><figcaption>Henningsvær pitch · Lofoten</figcaption></figure>
+      <figure tabindex="0" role="button" aria-label="View larger: Reine at sunrise · Lofoten"><img src="assets/gallery/lofoten-reine-sunrise.jpg" alt="Pink morning light on snowy peaks above the still water at Reine in Lofoten" width="1300" height="731" loading="lazy"><figcaption>Reine at sunrise · Lofoten</figcaption></figure>
+      <figure tabindex="0" role="button" aria-label="View larger: Sakrisøy rorbuer · Lofoten"><img src="assets/gallery/lofoten-sakrisoy-summer.jpg" alt="Yellow rorbu cabins on stilts reflected in calm green water at Sakrisøy" width="1300" height="867" loading="lazy"><figcaption>Sakrisøy rorbuer · Lofoten</figcaption></figure>
+      <figure tabindex="0" role="button" aria-label="View larger: Fredvang bridges · Lofoten"><img src="assets/gallery/lofoten-fredvang.jpg" alt="The Fredvang bridges curving across turquoise shallows toward a pointed green mountain" width="1300" height="975" loading="lazy"><figcaption>Fredvang bridges · Lofoten</figcaption></figure>
+      <figure tabindex="0" role="button" aria-label="View larger: Reine from Reinebringen · Lofoten"><img src="assets/gallery/lofoten-reinebringen.jpg" alt="The village of Reine spread across small islands among fjords and peaks, seen from Reinebringen" width="1300" height="731" loading="lazy"><figcaption>Reine from Reinebringen · Lofoten</figcaption></figure>
+      <figure tabindex="0" role="button" aria-label="View larger: Red rorbuer · Lofoten"><img src="assets/gallery/lofoten-rorbuer.jpg" alt="A row of red rorbu cabins on stilts over the water with a snowy mountain behind" width="1300" height="867" loading="lazy"><figcaption>Red rorbuer · Lofoten</figcaption></figure>
+    </div>
+    <p class="photo-credit rv">Photos in the Experiences and Gallery sections are by independent photographers, sourced from <a href="https://unsplash.com" rel="noopener">Unsplash</a>. All rights remain with their respective owners; they are used here under the Unsplash License. Photographers: Munir Rani, Ludovic Charlet, Bit Cloud, Stock Birken, Andreas Vonlanthen, Julien Chatelain, Benjamin Vang, Kevin Bessat, Samuele Bertoli, Chris Stenger, Felix Bacher, Jorn Eriksen, Anton Lammert, Mats Fjellheim, snap wander, Niklas Jonasson, Bjørn Are With Andreassen, Raul Ling, Sami Matias Breilin, Vidar Nordli-Mathisen, Fredrik Solli Wandem, Tifenn Degornet, green ant, Eibhlis Gale-Coleman, Krisztina Kovari, Alexander Sinn, Guillaume Coué, Susan Q Yin, Bingqi Huang, Joshua Kettle, Luke Stackpoole, Johny Goerend, John O'Nolan, André Mašek and Abhishek Umrao. The photos in “The lights” section were taken by Northride on our own tours.</p>
+    <div class="region-cta rv">
+      <p>Seen somewhere you want to stand?</p>
+      <a class="btn btn-gold" href="https://api.whatsapp.com/send?phone=4794449990&amp;text=Hi%20Northride%2C%20I%20saw%20your%20gallery%20and%20would%20like%20help%20planning%20a%20private%20tour.">Plan my tour on WhatsApp</a>
     </div>
   </div>
 </section>
@@ -632,8 +872,17 @@ body > footer{border-top:1px solid var(--line);padding:44px 0;background:var(--n
   <div class="wrap foot-in">
     <span><b style="color:var(--snow)">Northride AS</b> · Private Arctic tours from Tromsø</span>
     <span>Licensed Norwegian tour company</span>
+    <span class="foot-credit">Some landscape photos courtesy of photographers on <a href="https://unsplash.com" rel="noopener" style="color:inherit;text-decoration:underline">Unsplash</a> — all rights belong to their respective owners. <a href="#gallery" style="color:inherit;text-decoration:underline">Photo credits</a></span>
   </div>
 </footer>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photo viewer">
+  <button class="lb-x" aria-label="Close">×</button>
+  <button class="lb-p" aria-label="Previous photo">‹</button>
+  <button class="lb-n" aria-label="Next photo">›</button>
+  <img alt="">
+  <div class="lb-cap"></div>
+</div>
 
 <a class="wa-float" href="https://api.whatsapp.com/send?phone=4794449990" aria-label="Chat on WhatsApp">
   <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.297-.497.1-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
@@ -646,6 +895,37 @@ const io = new IntersectionObserver(es=>{
   es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
 },{threshold:.12});
 document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+
+// hero video: start only after the page has loaded, pick the file that fits the screen,
+// and skip it entirely on data-saver / very slow connections (the poster image stays).
+(function(){
+  const v=document.querySelector('.hero-media video'); if(!v) return;
+  if(matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+  const c=navigator.connection||{}; if(c.saveData||/(^|-)2g$/.test(c.effectiveType||'')) return;
+  const start=()=>{ const r=v.parentNode.getBoundingClientRect();
+    v.src=(r.width/r.height<1)?v.dataset.mobile:v.dataset.desktop;
+    const on=()=>v.classList.add('on'); ['playing','loadeddata','timeupdate'].forEach(ev=>v.addEventListener(ev,on,{once:true}));
+    const pr=v.play(); if(pr&&pr.catch) pr.catch(()=>{}); };
+  if(document.readyState==='complete') start(); else addEventListener('load',start,{once:true});
+})();
+
+// gallery lightbox
+(function(){
+  const all=[...document.querySelectorAll('#gallery .mas figure')], lb=document.getElementById('lb'), mas=document.getElementById('mas');
+  if(!all.length||!lb) return; let figs=all;
+  const img=lb.querySelector('img'), cap=lb.querySelector('.lb-cap'); let i=0, last=null;
+  const show=n=>{ i=(n+figs.length)%figs.length; const f=figs[i].querySelector('img');
+    img.src=f.currentSrc||f.src; img.alt=f.alt; cap.textContent=figs[i].querySelector('figcaption').textContent; };
+  const open=f=>{ last=document.activeElement; figs=all.filter(x=>x.offsetParent!==null); show(Math.max(0,figs.indexOf(f))); lb.classList.add('on'); document.body.style.overflow='hidden'; lb.querySelector('.lb-x').focus(); };
+  const close=()=>{ lb.classList.remove('on'); document.body.style.overflow=''; if(last) last.focus(); };
+  all.forEach(f=>{ f.addEventListener('click',()=>open(f));
+    f.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); open(f);} }); });
+  const more=document.getElementById('masMore');
+  if(more) more.addEventListener('click',()=>{ mas.classList.add('all'); more.parentNode.remove(); });
+  lb.addEventListener('click',e=>{ if(e.target.closest('.lb-p')) show(i-1); else if(e.target.closest('.lb-n')) show(i+1); else close(); });
+  document.addEventListener('keydown',e=>{ if(!lb.classList.contains('on')) return;
+    if(e.key==='Escape') close(); if(e.key==='ArrowLeft') show(i-1); if(e.key==='ArrowRight') show(i+1); });
+})();
 </script>
 </body>
 </html>
