@@ -36,20 +36,13 @@
 <script src="/assets/consent.js" defer></script>
 <!-- Event snippet for Submit lead form conversion (fires on WhatsApp / email / Book online clicks) -->
 <script>
+  // Never block or delay the tap: the link opens natively (new tab / app) and this page stays
+  // open behind it, so the conversion hit is sent without intercepting navigation.
   document.addEventListener('click', function (e) {
     var a = e.target.closest && e.target.closest('a[href]');
     if (!a) return;
-    var href = a.getAttribute('href');
-    if (!/^(mailto:|https:\/\/api\.whatsapp\.com|https:\/\/app\.bookspot\.io)/.test(href)) return;
-    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || a.target === '_blank') {
-      gtag('event', 'conversion', {'send_to': 'AW-17863576644/DX90CN6f5LEcEMSYgsZC'});
-      return;
-    }
-    e.preventDefault();
-    var done = false;
-    var go = function () { if (done) return; done = true; window.location = href; };
-    gtag('event', 'conversion', {'send_to': 'AW-17863576644/DX90CN6f5LEcEMSYgsZC', 'event_callback': go});
-    setTimeout(go, 1000);
+    if (!/^(mailto:|https:\/\/api\.whatsapp\.com|https:\/\/app\.bookspot\.io)/.test(a.getAttribute('href'))) return;
+    gtag('event', 'conversion', {'send_to': 'AW-17863576644/DX90CN6f5LEcEMSYgsZC', 'transport_type': 'beacon'});
   });
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -180,7 +173,7 @@ footer{border-top:1px solid var(--line);padding:44px 0;background:var(--night-2)
       <a href="/blog" class="active">Blog</a>
       <a href="/#contact">Contact</a>
     </div>
-    <a class="btn" href="https://app.bookspot.io/widget/v3?widgetId=eedd3d71-fbe0-4411-952e-723609b4b73e">Book online</a>
+    <a class="btn" href="https://app.bookspot.io/widget/v3?widgetId=eedd3d71-fbe0-4411-952e-723609b4b73e" target="_blank" rel="noopener">Book online</a>
   </div>
 </nav>
 
@@ -203,7 +196,7 @@ footer{border-top:1px solid var(--line);padding:44px 0;background:var(--night-2)
 <section class="cta-band">
   <div class="wrap cta-in">
     <h2>Ready when you are.<br>Tell us your dates.</h2>
-    <a class="btn" href="https://api.whatsapp.com/send?phone=4794449990">WhatsApp · +47 944 49 990</a>
+    <a class="btn" href="https://api.whatsapp.com/send?phone=4794449990" target="_blank" rel="noopener">WhatsApp · +47 944 49 990</a>
   </div>
 </section>
 
@@ -214,7 +207,7 @@ footer{border-top:1px solid var(--line);padding:44px 0;background:var(--night-2)
   </div>
 </footer>
 
-<a class="wa-float" href="https://api.whatsapp.com/send?phone=4794449990" aria-label="Chat on WhatsApp">
+<a class="wa-float" href="https://api.whatsapp.com/send?phone=4794449990" aria-label="Chat on WhatsApp" target="_blank" rel="noopener">
   <i></i><span>Reply in minutes — WhatsApp</span>
 </a>
 
