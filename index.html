@@ -133,8 +133,7 @@ header{
 }
 /* hero video */
 .hero-media{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;background:url("assets/hero-poster-desktop.jpg") 50% 50%/cover no-repeat}
-.hero-media video{width:100%;height:100%;object-fit:cover;object-position:50% 50%;display:block;filter:brightness(1.12) saturate(1.08);opacity:0;transition:opacity .8s var(--ease)}
-.hero-media video.on{opacity:1}
+.hero-media video{width:100%;height:100%;object-fit:cover;object-position:50% 50%;display:block;filter:brightness(1.12) saturate(1.08)}
 @media (max-aspect-ratio:1/1){.hero-media{background-image:url("assets/hero-poster-mobile.jpg")}}
 .hero-media::after{content:"";position:absolute;inset:0;background:
   linear-gradient(rgba(10,17,31,.30), rgba(10,17,31,.06) 22%, rgba(10,17,31,.10) 68%, rgba(10,17,31,.82)),
@@ -478,7 +477,7 @@ body > footer{border-top:1px solid var(--line);padding:44px 0;background:var(--n
 
 <header>
   <div class="hero-media" aria-hidden="true">
-    <video muted loop playsinline preload="none" data-desktop="assets/hero-desktop.mp4" data-mobile="assets/hero-mobile.mp4"></video>
+    <video autoplay muted loop playsinline webkit-playsinline disablepictureinpicture preload="none" data-desktop="assets/hero-desktop.mp4" data-mobile="assets/hero-mobile.mp4"></video>
   </div>
   <div class="wrap hero-grid">
     <div>
@@ -914,14 +913,21 @@ document.querySelectorAll('.rv').forEach(el=>io.observe(el));
 
 // hero video: start only after the page has loaded, pick the file that fits the screen,
 // and skip it entirely on data-saver / very slow connections (the poster image stays).
+// iOS Safari only autoplays a video that is visible, muted (as a property, not just the
+// attribute) and inline; in Low Power Mode it needs a touch first, so we retry on first gesture.
 (function(){
   const v=document.querySelector('.hero-media video'); if(!v) return;
   if(matchMedia('(prefers-reduced-motion:reduce)').matches) return;
   const c=navigator.connection||{}; if(c.saveData||/(^|-)2g$/.test(c.effectiveType||'')) return;
-  const start=()=>{ const r=v.parentNode.getBoundingClientRect();
-    v.src=(r.width/r.height<1)?v.dataset.mobile:v.dataset.desktop;
-    const on=()=>v.classList.add('on'); ['playing','loadeddata','timeupdate'].forEach(ev=>v.addEventListener(ev,on,{once:true}));
-    const pr=v.play(); if(pr&&pr.catch) pr.catch(()=>{}); };
+  const play=()=>{ if(!v.paused) return; v.muted=true; const pr=v.play(); if(pr&&pr.catch) pr.catch(()=>{}); };
+  const start=()=>{ const r=v.parentNode.getBoundingClientRect(), mobile=r.width/r.height<1;
+    v.muted=true; v.defaultMuted=true; v.playsInline=true;
+    v.poster=mobile?'assets/hero-poster-mobile.jpg':'assets/hero-poster-desktop.jpg';
+    v.src=mobile?v.dataset.mobile:v.dataset.desktop; v.load();
+    v.addEventListener('canplay',play); play();
+    const gesture=()=>{ play(); if(!v.paused) ['touchstart','click','scroll','keydown'].forEach(ev=>removeEventListener(ev,gesture,true)); };
+    ['touchstart','click','scroll','keydown'].forEach(ev=>addEventListener(ev,gesture,{capture:true,passive:true}));
+    document.addEventListener('visibilitychange',()=>{ if(!document.hidden) play(); }); };
   if(document.readyState==='complete') start(); else addEventListener('load',start,{once:true});
 })();
 
